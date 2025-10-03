@@ -1,5 +1,6 @@
 package com.shambhu.auth_service.Util;
 
+import com.shambhu.auth_service.entity.accounting.User;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -34,9 +35,10 @@ public class JwtUtil {
         Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJwt(token).getBody();
     }
 
-    public String generateToken(UserDetails userDetails){
+    public String generateToken(UserDetails userDetails, User user, Long userId){
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role", userDetails.getAuthorities().)
+        claims.put("role", user.getRole());
+        claims.put("userId", userId);
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
                 .addClaims(claims)
